@@ -20,7 +20,7 @@ jobs:
         run: pytest --junitxml=junit.xml || true # || true ensures the workflow continues
 
       - name: Run FlakeShield Action
-        uses: deeoli/flakeshield-scratch@week-4-improve-data-schema # Point to your current branch
+        uses: deeoli/flakeshield-scratch@feature/config-layer # Point to your current branch
         with:
           reports: "junit.xml"
           enable_semantic: "true"
