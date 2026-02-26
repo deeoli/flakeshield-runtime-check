@@ -13,6 +13,3 @@ def test_potential_flake():
 
 def test_hard_failure():
     assert False, "This is a definitive bug"
-
-
-# trigger tests
