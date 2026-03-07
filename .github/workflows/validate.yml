@@ -16,8 +16,12 @@ jobs:
       - name: Install dependencies
         run: pip install pytest
 
-      - name: Run tests and generate JUnit XML
-        run: pytest --junitxml=junit.xml || true # || true ensures the workflow continues
+      - name: Run tests and generate JUnit XML files
+        run: |
+          mkdir -p outputs
+          pytest --junitxml=outputs/junit_run1.xml || true
+          pytest --junitxml=outputs/junit_run2.xml || true
+            # || true ensures the workflow continues
 
       - name: Run FlakeShield Action
         uses: deeoli/flakeshield-scratch@feature/config-layer # Point to your current branch
