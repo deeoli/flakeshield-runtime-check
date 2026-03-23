@@ -1,11 +1,13 @@
 name: FlakeShield Runtime Validation
+
 on: [pull_request, push]
 
 jobs:
   validate-action:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      - name: Checkout test repo
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -13,21 +15,28 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Install test dependencies
         run: pip install pytest
 
       - name: Run tests and generate JUnit XML files
         run: |
           mkdir -p outputs
-          pytest --junitxml=outputs/junit_run1.xml || true
-          pytest --junitxml=outputs/junit_run2.xml || true
-            # || true ensures the workflow continues
+          pytest test_suite/test_flaky.py --junitxml=outputs/junit_run1.xml || true
+          pytest test_suite/test_flaky.py --junitxml=outputs/junit_run2.xml || true
 
       - name: Run FlakeShield Action
-        uses: deeoli/flakeshield-scratch@feature/config-layer # Point to your current branch
+        uses: deeoli/flakeshield-scratch@feature/config-layer
         with:
-          reports: "junit.xml"
+          reports: "outputs/junit_run*.xml"
           enable_semantic: "true"
           warn_on_high: "true"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload FlakeShield JSON Output
+        uses: actions/upload-artifact@v3
+        with:
+          name: flakeshield-report
+          path: |
+            results/report.json
+            results/events.json
