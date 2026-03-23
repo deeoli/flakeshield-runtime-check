@@ -30,13 +30,12 @@ jobs:
           reports: "outputs/junit_run*.xml"
           enable_semantic: "true"
           warn_on_high: "true"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload FlakeShield JSON Output
+      - name: Upload FlakeShield artifacts
         uses: actions/upload-artifact@v4
         with:
           name: flakeshield-report
           path: |
-            results/report.json
-            results/events.json
+            outputs/flake_report.json
+            outputs/flake_report.md
+            outputs/flakeshield.db
