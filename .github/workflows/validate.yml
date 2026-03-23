@@ -18,16 +18,17 @@ jobs:
       - name: Install test dependencies
         run: pip install pytest
 
-      - name: Assert test files exist
-        run: |
-          test -f outputs/junit_run1.xml || (echo "Missing first XML report!" && exit 1)
-          test -f outputs/junit_run2.xml || (echo "Missing second XML report!" && exit 1)
-
       - name: Run tests and generate JUnit XML files
         run: |
           mkdir -p outputs
           pytest tests/test_sample.py --junitxml=outputs/junit_run1.xml || true
           pytest tests/test_sample.py --junitxml=outputs/junit_run2.xml || true
+
+      - name: Assert test files exist
+        run: |
+          test -f outputs/junit_run1.xml || (echo "Missing first XML report!" && exit 1)
+          test -f outputs/junit_run2.xml || (echo "Missing second XML report!" && exit 1)
+
 
       - name: Run FlakeShield Action
         uses: deeoli/flakeshield-scratch@feature/config-layer
