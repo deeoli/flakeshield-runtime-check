@@ -43,6 +43,8 @@ jobs:
           reports: "outputs/junit_run*.xml"
           enable_semantic: "true"
           warn_on_high: "true"
+          fail_on_critical: "true"
+          max_risk_threshold: "0.80"
 
       - name: Upload FlakeShield artifacts
         uses: actions/upload-artifact@v4
