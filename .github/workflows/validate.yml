@@ -23,12 +23,19 @@ jobs:
           mkdir -p outputs
           pytest tests/test_sample.py --junitxml=outputs/junit_run1.xml || true
           pytest tests/test_sample.py --junitxml=outputs/junit_run2.xml || true
+          pytest tests/test_sample.py --junitxml=outputs/junit_run3.xml || true
+          pytest tests/test_sample.py --junitxml=outputs/junit_run4.xml || true
+          pytest tests/test_sample.py --junitxml=outputs/junit_run5.xml || true
+          pytest tests/test_sample.py --junitxml=outputs/junit_run6.xml || true
 
       - name: Assert test files exist
         run: |
-          test -f outputs/junit_run1.xml || (echo "Missing first XML report!" && exit 1)
-          test -f outputs/junit_run2.xml || (echo "Missing second XML report!" && exit 1)
-
+          test -f outputs/junit_run1.xml || (echo "Missing junit_run1.xml!" && exit 1)
+          test -f outputs/junit_run2.xml || (echo "Missing junit_run2.xml!" && exit 1)
+          test -f outputs/junit_run3.xml || (echo "Missing junit_run3.xml!" && exit 1)
+          test -f outputs/junit_run4.xml || (echo "Missing junit_run4.xml!" && exit 1)
+          test -f outputs/junit_run5.xml || (echo "Missing junit_run5.xml!" && exit 1)
+          test -f outputs/junit_run6.xml || (echo "Missing junit_run6.xml!" && exit 1)
 
       - name: Run FlakeShield Action
         uses: deeoli/flakeshield-scratch@feature/config-layer
