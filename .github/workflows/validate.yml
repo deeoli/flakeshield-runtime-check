@@ -38,7 +38,7 @@ jobs:
           test -f outputs/junit_run6.xml || (echo "Missing junit_run6.xml!" && exit 1)
 
       - name: Run FlakeShield Action
-        uses: deeoli/flakeshield-scratch@feature/config-layer
+        uses: deeoli/flakeshield-scratch@v0.4.0
         with:
           reports: "outputs/junit_run*.xml"
           enable_semantic: "true"
